@@ -21,12 +21,12 @@ module Selenium
       @path = uri.path.not_nil!
       @port = uri.port.not_nil!
 
-      @client = HTTP::Client.new(@uri)
+      @client = HTTP::Client.new(uri)
 
       @tls = false
 
-      if @uri.user && @uri.password
-        @client.basic_auth(@uri.user, @uri.password)
+      if uri.user && uri.password
+        @client.basic_auth(uri.user, uri.password)
       end
     end
 
