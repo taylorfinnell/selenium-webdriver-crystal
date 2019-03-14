@@ -16,10 +16,10 @@ module Selenium
       @client = HTTP::Client.new(host, port, tls: tls)
     end
 
-    def initialize(@uri : URI)
-      @host = @uri.host.not_nil!
-      @path = @uri.path.not_nil!
-      @port = @uri.port.not_nil!
+    def initialize(uri : URI)
+      @host = uri.host.not_nil!
+      @path = uri.path.not_nil!
+      @port = uri.port.not_nil!
 
       @client = HTTP::Client.new(@uri)
 
