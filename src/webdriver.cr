@@ -23,6 +23,8 @@ module Selenium
 
       @client = HTTP::Client.new(@uri)
 
+      @tls = false
+
       if @uri.user && @uri.password
         @client.basic_auth(@uri.user, @uri.password)
       end
