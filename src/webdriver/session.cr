@@ -30,8 +30,15 @@ module Selenium
       }
       response = driver.post("/session", body)
 
-      @id = response["sessionId"].as_s
-      @capabilities = response["value"].as_h
+      if response["sessionId"]?
+        # selenium / chrome
+        @id = response["sessionId"].as_s
+        @capabilities = response["value"].as_h
+      else
+        # firefox marionette
+        @id = response["value"]["sessionId"].as_s
+        @capabilities = response["value"]["capabilities"].as_h
+      end
 
       if url
         self.url = url

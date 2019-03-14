@@ -1,6 +1,7 @@
 require "http/client"
 require "json"
 require "base64"
+require "uri"
 require "./webdriver/errors"
 require "./webdriver/session"
 
@@ -13,6 +14,18 @@ module Selenium
 
     def initialize(@host = "localhost", @port = 4444, @path = "/wd/hub", @tls = false)
       @client = HTTP::Client.new(host, port, tls: tls)
+    end
+
+    def initialize(@uri : URI)
+      @host = @uri.host.not_nil!
+      @path = @uri.path.not_nil!
+      @port = @uri.port.not_nil!
+
+      @client = HTTP::Client.new(@uri)
+
+      if @uri.user && @uri.password
+        @client.basic_auth(@uri.user, @uri.password)
+      end
     end
 
     def get(path)
